@@ -7,9 +7,9 @@ event_id=8
 def getdata():
     try:
         connection = mysql.connector.connect(host='localhost',
-                                             database='test',
+                                             database='isacaAdmin',
                                              user='root',
-                                             password='')
+                                             password='root')
 
         sql_select_Query_team = "SELECT T.id,T.teamName,T.proposal,I.instituteName FROM ihack_teams T, institutes I WHERE T.instituteId=I.id AND T.event_id=8"
         cursor = connection.cursor()
@@ -18,7 +18,7 @@ def getdata():
 
         data=[]
         for trow in team_records:
-            sql_select_Query_participants = "SELECT firstName,lastName,contact,yearOfStudy,meal,tShirtSize FROM ihack_participants WHERE team_id = "+str(row[0])+" AND event_id ="+str(event_id)
+            sql_select_Query_participants = "SELECT firstName,lastName,contact,yearOfStudy,meal,tShirtSize FROM ihack_participants WHERE team_id = "+str(trow[0])+" AND event_id ="+str(event_id)
             cursor.execute(sql_select_Query_participants)
             participant_records = cursor.fetchall()
             
@@ -48,12 +48,12 @@ def writedata():
         data = getdata()
         fields = ['id', 'teamName','proposal','instituteName','name_1','contact_1','yearOfStudy_1','meal_1','tshirtSize_1','name_2','contact_2','yearOfStudy_2','meal_2','tshirtSize_2',
                   'name_3','contact_3','yearOfStudy_3','meal_3','tshirtSize_3','name_4','contact_4','yearOfStudy_4','meal_4','tshirtSize_4',]
-        writer = csv.DictWriter(csvFile, fieldnames=fields)
+        writer = csv.DictWriter(csvfile, fieldnames=fields)
         writer.writeheader()
         writer.writerows(data)
 
     print("file writing complete.")
-    
+
 writedata()
 #SELECT T.id,T.teamName,T.proposal,I.instituteName FROM ihack_teams T, institutes I WHERE T.instituteId=I.id AND T.event_id=8
 #SELECT firstName,lastName,contact,yearOfStudy,meal,tShirtSize FROM ihack_participants WHERE team_id =  AND event_id = 
