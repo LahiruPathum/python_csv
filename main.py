@@ -11,7 +11,7 @@ def getdata():
                                              user='root',
                                              password='root')
 
-        sql_select_Query_team = "SELECT T.id,T.teamName,T.proposal,I.instituteName FROM ihack_teams T, institutes I WHERE T.instituteId=I.id AND T.event_id=8"
+        sql_select_Query_team = "SELECT T.id,T.teamName,T.proposal,I.instituteName FROM ihack_teams T, institutes I WHERE T.instituteId=I.id AND T.event_id="+str(event_id)
         cursor = connection.cursor()
         cursor.execute(sql_select_Query_team)
         team_records = cursor.fetchall()
@@ -55,5 +55,3 @@ def writedata():
     print("file writing complete.")
 
 writedata()
-#SELECT T.id,T.teamName,T.proposal,I.instituteName FROM ihack_teams T, institutes I WHERE T.instituteId=I.id AND T.event_id=8
-#SELECT firstName,lastName,contact,yearOfStudy,meal,tShirtSize FROM ihack_participants WHERE team_id =  AND event_id = 
